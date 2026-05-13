@@ -52,7 +52,7 @@ public class UserService {
          UserDTO dadoslogados =repository.logar(user.getEmail(), user.getSenha());
          return tokenService.gerarToken(dadoslogados);
     }
-        public UserDTO editarcompra(UserDTO user){
+        public void editarcompra(UserDTO user){
             String mensagem="";
             if(user.getRole().equals("FORNECEDOR")){
                 mensagem="Você não é comprador";
@@ -63,6 +63,6 @@ public class UserService {
             if(!mensagem.equals("")){
             throw new ResponseStatusException(HttpStatusCode.valueOf(404), mensagem);
         }
-          return repository.editarcompra(mensagem);
+          repository.editarcompra(user);
         }
 }

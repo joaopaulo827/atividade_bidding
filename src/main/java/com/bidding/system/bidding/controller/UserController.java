@@ -33,7 +33,8 @@ public class UserController {
         return service.logar(user);
     }
 @PostMapping("/editais")
-    public UserDTO editarcompra(@RequestBody UserDTO user){
-        return service.editarcompra(user);
+    public String editarcompra(@RequestBody UserDTO user){
+        service.editarcompra(user);
+        return "Compra adicionada";
     }
 }
