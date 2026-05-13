@@ -20,6 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
     @Autowired
     private UserDAO repository;
+    @Autowired
+    private TokenService tokenService;
     
     public void registar(UserDTO user){
         String mensagem ="";
@@ -32,21 +34,35 @@ public class UserService {
     }else if(user.getRole().equals("")){
         user.setRole("FORNECEDOR");
     }
-     if(mensagem.equals("")){
+     if(!mensagem.equals("")){
          throw new ResponseStatusException(HttpStatusCode.valueOf(404), mensagem);
      }
      repository.register(user);
 }
-        public UserDTO logar(UserRequestDTO user){
+        public String logar(UserRequestDTO user){
         String mensagem="";
         if(user.getEmail().equals("")){
             mensagem= "Email não preenchido";
         }else if(user.getSenha().equals("")){
             mensagem= "Senha não preenchida";
         }
-        if(mensagem.equals("")){
+        if(!mensagem.equals("")){
             throw new ResponseStatusException(HttpStatusCode.valueOf(404), mensagem);
         }
-         return repository.logar(user.getEmail(), user.getSenha());
+         UserDTO dadoslogados =repository.logar(user.getEmail(), user.getSenha());
+         return tokenService.gerarToken(dadoslogados);
     }
+        public UserDTO editarcompra(UserDTO user){
+            String mensagem="";
+            if(user.getRole().equals("FORNECEDOR")){
+                mensagem="Você não é comprador";
+            }
+            else if(user.getRole().equals("")){
+                mensagem="Você não tem um role";
+            }
+            if(!mensagem.equals("")){
+            throw new ResponseStatusException(HttpStatusCode.valueOf(404), mensagem);
+        }
+          return repository.editarcompra(mensagem);
+        }
 }

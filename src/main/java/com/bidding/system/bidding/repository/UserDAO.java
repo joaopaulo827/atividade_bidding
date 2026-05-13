@@ -5,14 +5,11 @@
 package com.bidding.system.bidding.repository;
 
 import com.bidding.system.bidding.model.UserDTO;
-import com.bidding.system.bidding.model.UserRequestDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
@@ -53,6 +50,27 @@ public class UserDAO {
                 user.setNome(rs.getString("nome"));
                 user.setRole(rs.getString("role"));                
             }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
+    public UserDTO editarcompra(String role){
+        UserDTO user = new UserDTO();
+        try{
+            Connection conn=Conexao.conectar();
+            PreparedStatement stmt=null;
+            ResultSet rs=null;
+            stmt=conn.prepareStatement("SELECT * from usuarios where role='COMPRADOR'");
+            stmt.setString(1, role);
+            rs=stmt.executeQuery();
+            if(rs.next()){
+                user.setId(rs.getLong("id"));
+                user.setEmail(rs.getString("email"));
+                user.setNome(rs.getString("nome"));   
+                user.setSenha(rs.getString("senha"));
+                user.setRole(rs.getString("role"));
+            }            
         }catch(SQLException e){
             e.printStackTrace();
         }
