@@ -4,7 +4,9 @@
  */
 package com.bidding.system.bidding.model;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
+
+
 
 /**
  *
@@ -14,13 +16,13 @@ public class EditarDTO {
     private Long id;
     private String titulo;
     private String descricao;
-    private Data data_fechamento;
+    private Date data_fechamento;
     private String status;
 
     public EditarDTO() {
     }
 
-    public EditarDTO(Long id, String titulo, String descricao, Data data_fechamento, String status) {
+    public EditarDTO(Long id, String titulo, String descricao, Date data_fechamento, String status) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -52,11 +54,11 @@ public class EditarDTO {
         this.descricao = descricao;
     }
 
-    public Data getData_fechamento() {
+    public Date getData_fechamento() {
         return data_fechamento;
     }
 
-    public void setData_fechamento(Data data_fechamento) {
+    public void setData_fechamento(Date data_fechamento) {
         this.data_fechamento = data_fechamento;
     }
 
@@ -67,6 +69,6 @@ public class EditarDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+  
     
 }

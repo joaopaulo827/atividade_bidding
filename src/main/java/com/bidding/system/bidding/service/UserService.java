@@ -47,22 +47,9 @@ public class UserService {
             mensagem= "Senha não preenchida";
         }
         if(!mensagem.equals("")){
-            throw new ResponseStatusException(HttpStatusCode.valueOf(404), mensagem);
+            throw new ResponseStatusException(HttpStatusCode.valueOf(400), mensagem);
         }
          UserDTO dadoslogados =repository.logar(user.getEmail(), user.getSenha());
          return tokenService.gerarToken(dadoslogados);
     }
-        public void editarcompra(UserDTO user){
-            String mensagem="";
-            if(user.getRole().equals("FORNECEDOR")){
-                mensagem="Você não é comprador";
-            }
-            else if(user.getRole().equals("")){
-                mensagem="Você não tem um role";
-            }
-            if(!mensagem.equals("")){
-            throw new ResponseStatusException(HttpStatusCode.valueOf(404), mensagem);
-        }
-          repository.editarcompra(user);
-        }
 }

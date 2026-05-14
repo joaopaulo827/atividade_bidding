@@ -6,6 +6,7 @@ package com.bidding.system.bidding.service;
 
 import com.bidding.system.bidding.model.UserDTO;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -41,11 +42,25 @@ public class TokenService {
         }
         return Jwts.builder()
                 .subject(user.getNome())
-                .claim("usuario", user)
+                .claim("id", user.getId())
+                .claim("nome",user.getNome())
+                .claim("role", user.getRole())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis()+ 30000))
                 .signWith(this.getKeySign())
                 .compact();
+    }
+    public boolean validarToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(getKeySign())
+                    .build()
+
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
     public UserDTO extrairClaims(String token) {
     Claims claims = Jwts.parser()
@@ -53,7 +68,10 @@ public class TokenService {
     .build()
     .parseSignedClaims(token)
     .getPayload();
-    UserDTO user = claims.get("usuario", UserDTO.class);
+    UserDTO user = new UserDTO();
+    user.setId(claims.get("id", Long.class));
+    user.setNome(claims.get("nome", String.class));
+    user.setRole(claims.get("role", String.class));
     return user;
     }
 }

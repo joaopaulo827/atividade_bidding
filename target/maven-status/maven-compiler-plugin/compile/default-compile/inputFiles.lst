@@ -1,9 +1,12 @@
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\BiddingApplication.java
+C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\controller\EditarController.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\controller\UserController.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\model\EditarDTO.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\model\UserDTO.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\model\UserRequestDTO.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\repository\Conexao.java
+C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\repository\EditarRepository.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\repository\UserDAO.java
+C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\service\EditarService.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\service\TokenService.java
 C:\Users\Aluno\Downloads\bidding\bidding\src\main\java\com\bidding\system\bidding\service\UserService.java

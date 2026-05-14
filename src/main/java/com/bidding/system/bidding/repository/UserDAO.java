@@ -55,21 +55,4 @@ public class UserDAO {
         }
         return user;
     }
-    public void editarcompra(UserDTO user){
-         try{
-            Connection conn= Conexao.conectar();
-            PreparedStatement stmt= null;
-            stmt= conn.prepareStatement("INSERT INTO usuarios (nome,email,senha,role) VALUES (?,?,?,?)");
-            stmt.setString(1, user.getNome());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getSenha());
-            stmt.setString(4, user.getRole());
-            int linhasAfetadas =stmt.executeUpdate();
-            if(linhasAfetadas == 0){
-                throw new SQLException("Falha na atualização - nenhuma linha foi alterada");
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-}
 }
