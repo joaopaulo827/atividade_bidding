@@ -59,5 +59,25 @@ public List<EditarDTO> listarTodos(){
             e.printStackTrace();
         }
         return dados;
-    }    
+    }
+    public EditarDTO getbyid(Long id){
+        EditarDTO editar= new EditarDTO();
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            
+            stmt = conn.prepareStatement("SELECT data_fechamento, status FROM editais where id=?");
+            stmt.setLong(1, id);
+            rs = stmt.executeQuery();
+            
+            if(rs.next()) {
+                editar.setData_fechamento(rs.getDate("data_fechamento"));
+                editar.setStatus(rs.getString("status"));
+            }
+        } catch(SQLException e ) {
+            e.printStackTrace();
+        }
+        return editar;        
+    }
 }

@@ -50,7 +50,11 @@ public class EditarService {
         }
     }
     }
-    public List<EditarDTO> listarTodos(){
-    return repository.listarTodos();
+    public List<EditarDTO> listarTodos(String token){    
+    if(tokenService.validarToken(token)){
+        return repository.listarTodos();
+    }else{
+        throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Necessario entrar com conta válida");
+    }
 }
 }

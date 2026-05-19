@@ -4,14 +4,14 @@
  */
 package com.bidding.system.bidding.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
  * @author Aluno
  */
 public class LancesDTO {
-    private int id;
+    private Long id;
     private double valor;
     private Date data_lance;
     private Long id_edital;
@@ -20,7 +20,7 @@ public class LancesDTO {
     public LancesDTO() {
     }
 
-    public LancesDTO(int id, double valor, Date data_lance, Long id_edital, Long id_usuario) {
+    public LancesDTO(Long id, double valor, Date data_lance, Long id_edital, Long id_usuario) {
         this.id = id;
         this.valor = valor;
         this.data_lance = data_lance;
@@ -28,11 +28,11 @@ public class LancesDTO {
         this.id_usuario = id_usuario;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

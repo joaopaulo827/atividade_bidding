@@ -5,8 +5,11 @@ com\bidding\system\bidding\BiddingApplication.class
 com\bidding\system\bidding\controller\UserController.class
 com\bidding\system\bidding\repository\Conexao.class
 com\bidding\system\bidding\model\EditarDTO.class
+com\bidding\system\bidding\model\LancesDTO.class
+com\bidding\system\bidding\repository\EditarDAO.class
 com\bidding\system\bidding\repository\UserDAO.class
 com\bidding\system\bidding\service\EditarService.class
 com\bidding\system\bidding\model\UserRequestDTO.class
+com\bidding\system\bidding\repository\LancesDAO.class
+com\bidding\system\bidding\service\LancesService.class
 com\bidding\system\bidding\controller\EditarController.class
-com\bidding\system\bidding\repository\EditarRepository.class

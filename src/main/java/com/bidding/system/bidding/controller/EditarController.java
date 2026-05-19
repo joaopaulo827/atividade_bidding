@@ -12,6 +12,7 @@ import com.bidding.system.bidding.service.LancesService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -41,12 +42,19 @@ public class EditarController {
         return "Edital Cadatrado com sucesso";
 }
     @GetMapping
-    public List <EditarDTO> ListarTodos(){
-        return service.listarTodos();
+    public List <EditarDTO> ListarTodos(
+        @RequestHeader("Authorization") String auth,
+        @RequestBody EditarDTO  editar){
+        String lista = auth.replace("Bearer ", "");
+        return service.listarTodos(lista);
     }
-    @PostMapping("/criar/lances")
-    public String criar(@RequestBody LancesDTO user){
-        LanceService.criarLances(user);
-        return "Novos dados adicionado com sucesso";
+    @PostMapping("{id}/lances")
+    public String registarLance(
+    @RequestHeader("Authorization") String auth,
+    @RequestBody LancesDTO  lance,
+    @PathVariable Long id){
+     String token =auth.replace("Bearer ", "");
+     LanceService.criarLance(id, lance, token);
+     return "Lance Registrado com sucesso";
     }
 }

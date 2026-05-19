@@ -4,8 +4,10 @@
  */
 package com.bidding.system.bidding.service;
 
+import com.bidding.system.bidding.model.EditarDTO;
 import com.bidding.system.bidding.model.LancesDTO;
-import com.bidding.system.bidding.repository.LancesDAO;
+import com.bidding.system.bidding.model.UserDTO;
+import com.bidding.system.bidding.repository.EditarDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
@@ -18,23 +20,26 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class LancesService {
     @Autowired
-    private LancesDAO repository;
+    private EditarDAO repository;
     @Autowired
     private TokenService tokenService;
     
-    public void criarLances(LancesDTO novo){
-    String mensagem = "";    
-    if(novo.getData_lance()==null){
-        mensagem+= "Data não preenchida!\n";
-    }
-    if(novo.getId_edital()==null){
-        mensagem+="Edital não preenchido!\n";
-    }
-    if(novo.getId_usuario()==null){
-        mensagem+="Usuario não preenchido!\n";
-    }
-    if(!mensagem.equals("")){
-    throw new ResponseStatusException(HttpStatusCode.valueOf(400), mensagem);
+    public void criarLance(Long id, LancesDTO lance, String token){
+        if(tokenService.validarToken(token)){
+          UserDTO user= tokenService.extrairClaims(token);
+          if(!user.getRole().equals("FORNCEDOR")){
+             throw new ResponseStatusException(HttpStatusCode.valueOf(403), "Você precisa ser fornecedor para cadastrar um lance");             
+          }
+          EditarDTO editar = repository.getbyid(id);
+          if(!editar.getStatus().equals("ABERTO")){
+            throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Você não pode criar lances para editar fechado!");
+          }
+          if(editar.getData_fechamento().before(lance.getData_lance())){
+            throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Data do lance ponsterior ao fechamento!");  
+          }
+        }else {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token invalido");
         }
+        
     }
 }
