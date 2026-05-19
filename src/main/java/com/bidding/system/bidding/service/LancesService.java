@@ -8,6 +8,7 @@ import com.bidding.system.bidding.model.EditarDTO;
 import com.bidding.system.bidding.model.LancesDTO;
 import com.bidding.system.bidding.model.UserDTO;
 import com.bidding.system.bidding.repository.EditarDAO;
+import com.bidding.system.bidding.repository.LancesDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class LancesService {
     private EditarDAO repository;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private LancesDAO lanceReposiotry;
     
     public void criarLance(Long id, LancesDTO lance, String token){
         if(tokenService.validarToken(token)){
@@ -36,6 +39,10 @@ public class LancesService {
           }
           if(editar.getData_fechamento().before(lance.getData_lance())){
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Data do lance ponsterior ao fechamento!");  
+          }
+          int linhas = lanceReposiotry.criarLance(lance);
+          if(linhas== 0){
+              throw new ResponseStatusException(HttpStatusCode.valueOf(500), "Erro no bancos de dados!");
           }
         }else {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token invalido");
